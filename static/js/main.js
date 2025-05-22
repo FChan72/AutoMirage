@@ -39,25 +39,38 @@ document.querySelectorAll('.btn').forEach(button => {
     });
 });
 
-// Скрипт для управления меню
+// Инициализация мобильного меню
 const menuToggle = document.querySelector('.mobile-menu-toggle');
-const navLinks = document.querySelector('.nav-links');
+const mobileMenu = document.querySelector('.mobile-menu');
+const desktopLoginBtn = document.querySelector('.auth-buttons .btn-login');
+const mobileLoginBtn = document.querySelector('.mobile-login');
 
 // Переключение меню
 menuToggle.addEventListener('click', (e) => {
     e.stopPropagation();
-    navLinks.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
 });
 
 // Закрытие меню при клике вне области
-document.addEventListener('click', () => {
-    navLinks.classList.remove('active');
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.mobile-menu') && !e.target.closest('.mobile-controls')) {
+        mobileMenu.classList.remove('active');
+    }
 });
 
-// Закрытие меню при ресайзе (на случай поворота экрана)
+// Синхронизация кнопки "Войти"
+function handleLogin() {
+    // Ваша логика авторизации
+    console.log('Login button clicked');
+}
+
+desktopLoginBtn.addEventListener('click', handleLogin);
+mobileLoginBtn.addEventListener('click', handleLogin);
+
+// Ресайз окна
 window.addEventListener('resize', () => {
     if (window.innerWidth > 768) {
-        navLinks.classList.remove('active');
+        mobileMenu.classList.remove('active');
     }
 });
 
