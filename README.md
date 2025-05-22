@@ -51,12 +51,25 @@ automirage/
 │   ├── js/         # JavaScript files                                                 
 │   └── images/     # Images                                                          
 └── templates/      # HTML templates                                                                             
-``
+
 ## Technologies
 Frontend: HTML5, CSS3, JavaScript
 Backend: Python, Flask
 Database: SQLite
 AI: OpenAI GPT-4
 ``
-## License
-MIT License
+## ⚠️ <span style="color:red">DANGER! DO NOT USE WITHOUT PERMISSION</span>
+
+**WARNING**  
+Any unauthorized use, copying, modification, or distribution of this code, in whole or in part,  
+is **strictly prohibited** without explicit written permission from the author.
+
+> Violators will be prosecuted to the fullest extent of the law.  
+> To request authorization, contact: [gen.fchan@gmail.com](mailto:gen.fchan@gmail.com).
+
+---
+
+### 🔒 License
+This repository does NOT have an open-source license.  
+All code is protected by copyright (Copyright © 2025 AutoMirage.  
+Any unauthorized use constitutes a violation of intellectual property laws.
