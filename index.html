@@ -9,33 +9,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <div class="logo">
-                <a href="#start" class="logo-link">
-                    <img src="static/images/logo.png" alt="AutoMirage Logo">
-                    <span>AutoMirage</span>
-                </a>
-            </div>
+<header class="header">
+    <nav class="nav">
+        <!-- Логотип -->
+        <div class="logo">
+            <a href="#start" class="logo-link">
+                <img src="static/images/logo.png" alt="AutoMirage Logo">
+                <span>AutoMirage</span>
+            </a>
+        </div>
+
+        <!-- Десктопные элементы -->
+        <ul class="nav-links">
+            <li><a href="#features">Возможности</a></li>
+            <li><a href="#templates">Шаблоны</a></li>
+            <li><a href="#pricing">Цены</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+        </ul>
+        
+        <!-- Десктопные кнопки -->
+        <div class="auth-buttons">
+            <button class="btn btn-login">Войти</button>
+            <button class="btn btn-primary">Начать бесплатно</button>
+        </div>
+
+        <!-- Мобильные элементы -->
+        <div class="mobile-controls">
+            <button class="btn btn-login mobile-login">Войти</button>
             <button class="mobile-menu-toggle">☰</button>
-            <ul class="nav-links">
-                <li><a href="#features">Возможности</a></li>
-                <li><a href="#templates">Шаблоны</a></li>
-                <li><a href="#pricing">Цены</a></li>
-                <li><a href="#contacts">Контакты</a></li>
-            </ul>
-            <div class="auth-buttons">
-                <button class="btn btn-login">Войти</button>
-                <button class="btn btn-primary">Начать бесплатно</button>
-            </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
     <main>
         <section id="start">
         <section class="hero">
             <div class="hero-content">
-                <div class="text"><em><h6>*Сайт сделан с помощью нейросетей*</h6></em></div>
+                <div class="text"><em><p style="font-size: medium;">*Сайт сделан с помощью нейросетей*</p></em></div>
                 <h1>Автоматизируйте рутину за 1 минуту</h1>
                 <p>Используйте силу AI для автоматизации повседневных задач</p>
                 <ul>
