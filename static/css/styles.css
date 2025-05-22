@@ -37,6 +37,7 @@ body {
     border-bottom: 1px solid rgba(123, 44, 191, 0.1);
 }
 
+/* Десктопная версия (оставляем как есть) */
 .nav {
     max-width: 1200px;
     margin: 0 auto;
