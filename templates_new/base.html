@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AutoMirage - Автоматизация рутинных задач{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="AutoMirage Logo">
+                <span>AutoMirage</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}#features">Возможности</a></li>
+                <li><a href="{{ url_for('index') }}#templates">Шаблоны</a></li>
+                <li><a href="{{ url_for('index') }}#pricing">Цены</a></li>
+                <li><a href="{{ url_for('index') }}#contact">Контакты</a></li>
+            </ul>
+            <div class="auth-buttons">
+                {% if current_user.is_authenticated %}
+                    <div class="user-profile">
+                        <img src="{{ current_user.avatar or url_for('static', filename='images/default-avatar.png') }}" alt="Avatar" class="avatar">
+                        <span>{{ current_user.name or current_user.email }}</span>
+                        <button class="btn btn-logout" onclick="logout()">Выйти</button>
+                    </div>
+                {% else %}
+                    <button class="btn btn-login">Войти</button>
+                    <button class="btn btn-primary">Начать бесплатно</button>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>AutoMirage</h4>
+                <p>Автоматизация, которая кажется волшебством</p>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <p>Email: info@automirage.com</p>
+                <p>Телефон: +7 (999) 123-45-67</p>
+            </div>
+            <div class="footer-section">
+                <h4>Социальные сети</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AutoMirage. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://vk.com/js/api/openapi.js?169"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 
