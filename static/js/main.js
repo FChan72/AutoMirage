@@ -39,6 +39,28 @@ document.querySelectorAll('.btn').forEach(button => {
     });
 });
 
+// Скрипт для управления меню
+const menuToggle = document.querySelector('.mobile-menu-toggle');
+const navLinks = document.querySelector('.nav-links');
+
+// Переключение меню
+menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navLinks.classList.toggle('active');
+});
+
+// Закрытие меню при клике вне области
+document.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+});
+
+// Закрытие меню при ресайзе (на случай поворота экрана)
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+        navLinks.classList.remove('active');
+    }
+});
+
 // Таймер экономии времени
 let savedMinutes = 0;
 
