@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Автоматизируйте рутину за 1 минуту</h1>
+        <p>Используйте силу AI для автоматизации повседневных задач</p>
+        <button class="btn btn-primary btn-large">Попробовать сейчас</button>
+    </div>
+    <div class="hero-image">
+        <img src="{{ url_for('static', filename='images/hero-illustration.png') }}" alt="Автоматизация">
+    </div>
+</section>
+
+<section id="features" class="features">
+    <h2>Возможности AutoMirage</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <i class="fas fa-robot"></i>
+            <h3>AI-ассистент</h3>
+            <p>Умный помощник для создания автоматизаций</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-code"></i>
+            <h3>Готовые шаблоны</h3>
+            <p>Более 100 готовых решений для автоматизации</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-bolt"></i>
+            <h3>Мгновенный результат</h3>
+            <p>Запускайте автоматизации без установки ПО</p>
+        </div>
+    </div>
+</section>
+
+<section id="templates" class="templates">
+    <h2>Популярные шаблоны</h2>
+    <div class="templates-grid">
+        <div class="template-card">
+            <h3>Автоответчик для Gmail</h3>
+            <p>Автоматические ответы на входящие письма</p>
+            <button class="btn btn-secondary">Использовать</button>
+        </div>
+        <div class="template-card">
+            <h3>Парсинг данных</h3>
+            <p>Сбор информации с веб-сайтов</p>
+            <button class="btn btn-secondary">Использовать</button>
+        </div>
+        <div class="template-card">
+            <h3>Отчеты Excel</h3>
+            <p>Автоматическая генерация отчетов</p>
+            <button class="btn btn-secondary">Использовать</button>
+        </div>
+    </div>
+</section>
+
+<section id="pricing" class="pricing">
+    <h2>Тарифы</h2>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <h3>Базовый</h3>
+            <p class="price">Бесплатно</p>
+            <ul>
+                <li>3 базовых шаблона</li>
+                <li>Ограниченный AI-ассистент</li>
+                <li>Базовая поддержка</li>
+                <li>До 5 автоматизаций</li>
+                <li>Базовые интеграции</li>
+            </ul>
+            <button class="btn btn-secondary">Начать</button>
+        </div>
+        <div class="pricing-card">
+            <h3>Junior</h3>
+            <p class="price">$5/мес</p>
+            <ul>
+                <li>8 шаблонов</li>
+                <li>Базовый AI-ассистент</li>
+                <li>Email поддержка</li>
+                <li>До 10 автоматизаций</li>
+                <li>Базовые интеграции</li>
+                <li>Экспорт в CSV</li>
+            </ul>
+            <button class="btn btn-primary">Выбрать</button>
+        </div>
+        <div class="pricing-card">
+            <h3>Middle</h3>
+            <p class="price">$15/мес</p>
+            <ul>
+                <li>15 шаблонов</li>
+                <li>Расширенный AI-ассистент</li>
+                <li>Приоритетная поддержка</li>
+                <li>До 20 автоматизаций</li>
+                <li>Расширенные интеграции</li>
+                <li>API доступ</li>
+                <li>Экспорт данных</li>
+            </ul>
+            <button class="btn btn-primary">Выбрать</button>
+        </div>
+        <div class="pricing-card featured">
+            <h3>Senior</h3>
+            <p class="price">$35/мес</p>
+            <ul>
+                <li>Все шаблоны</li>
+                <li>Полный доступ к AI</li>
+                <li>VIP поддержка 24/7</li>
+                <li>Неограниченные автоматизации</li>
+                <li>Все интеграции</li>
+                <li>Полный API доступ</li>
+                <li>Расширенный экспорт данных</li>
+                <li>Приоритетные обновления</li>
+                <li>Персональный менеджер</li>
+                <li>Обучение команды</li>
+            </ul>
+            <button class="btn btn-primary">Выбрать</button>
+        </div>
+    </div>
+</section>
+{% endblock %} 
