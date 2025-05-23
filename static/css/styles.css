@@ -717,6 +717,114 @@ nav.nav > button.mobile-menu-toggle {
         height: 400px;
         margin-top: 2rem;
     }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-switch {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.form-switch a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-switch a:hover {
+    text-decoration: underline;
+}
+
+#loginForm, #registerForm {
+    margin-top: 20px;
+}
+
+#loginForm button, #registerForm button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.user-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--primary-color);
+    background: none;
+    border: none;
+    font-size: 1rem;
+    transition: opacity 0.2s;
+}
+.user-profile-btn:hover {
+    opacity: 0.7;
+}
+.btn-logout {
+    margin-left: 10px;
+    background: none;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-logout:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+.profile-info {
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+.profile-info p {
+    margin-bottom: 10px;
 } 
+
+
 
 
