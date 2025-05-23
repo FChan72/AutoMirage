@@ -39,7 +39,7 @@ body {
 
 /* Десктопная версия (оставляем как есть) */
 .nav {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 1rem;
     display: flex;
@@ -89,93 +89,130 @@ body {
 }
 
 nav.nav > button.mobile-menu-toggle {
-    display: none !important;
+    display: none !important; /* Скрываем кнопку меню на десктопе */
 }
 
 @media (max-width: 768px) {
     .nav {
-        display: flex; /* Ensure it's a flex container */
-        justify-content: space-between; /* To put space between logo and controls */
-        align-items: center;
+        display: flex;
+        height: 55px;
+        justify-content: space-between; /* Распределяем пространство */
+        align-items: center; /* Выравниваем по вертикали */
         padding: 12px 15px;
-        /* Remove flex-wrap: wrap for now, let's see if space-between works */
-        gap: 15px; /* Adjust gap as needed */
+    }
+
+    .mobile-controls {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
     }
 
     .logo {
-        order: 0; /* Reset order */
-        flex-grow: 0; /* Don't let it greedily take space */
-        flex-basis: auto;
         display: flex;
         align-items: center;
-        height: 40px;
+        gap: 0.5rem;
+        margin: 0 auto; /* Центрируем */
+        flex-grow: 1; /* Занимает доступное пространство */
+        text-align: center;
+        pointer-events: none;
+        position: absolute;
     }
 
     .logo-link {
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        text-decoration: none;
+        color: var(--text-color);
+        pointer-events: auto;
     }
 
     .logo img {
-        height: 35px;
+        height: 30px;
     }
 
-    .mobile-controls {
-        order: 0; /* Reset order */
+    .mobile-controls .mobile-menu-toggle {
+        font-size: 2rem;
+        border: none;
+        background-color: transparent;
+        color: var(--text-color);
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+        width: auto;
+        height: auto;
+        min-width: 400px;
+        min-height: 0px;
         display: flex;
         align-items: center;
-        gap: 15px;
-        height: 40px;
+        justify-content: left;
+        margin-left: auto; /* Прижимаем к правому краю */
     }
 
-    /* Скрываем десктопные элементы */
-    .nav-links,
     .auth-buttons {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-right: -350px;
+    }
+
+    .auth-buttons .btn-primary {
         display: none !important;
     }
 
-    /* Стили для мобильного меню */
-    .mobile-menu {
-        display: none;
+    /* Скрываем десктопное меню */
+    .nav-links.mobile-menu {
+        display: none !important;
+    }
+
+    /* Стили для отображения мобильного меню */
+    .nav-links.mobile-menu.active {
+        display: block !important;
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
         background: var(--card-background);
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        padding: 15px 0;
-        z-index: 1000;
+        z-index: 100;
+        padding: 15px;
+        margin-left: 30px;
     }
 
-    .mobile-menu.active {
-        display: block;
-    }
-
-    .mobile-menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .mobile-menu li {
-        padding: 12px 20px;
+    .nav-links.mobile-menu.active li {
+        padding: 10px 0;
         border-bottom: 1px solid rgba(123, 44, 191, 0.1);
+        text-align: center;
     }
 
-    .mobile-menu .btn-primary {
-        margin: 15px 20px 0;
-        width: calc(100% - 40px);
+    .nav-links.mobile-menu.active li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links.mobile-menu.active a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: var(--text-color);
     }
 }
 
 @media (min-width: 769px) {
-    .mobile-controls,
-    .mobile-menu {
+    .mobile-controls {
+        display: none !important;
+    }
+    .auth-buttons .btn-primary {
+        display: inline-block; /* Показываем кнопку "Начать бесплатно" на десктопе (если она inline-block по умолчанию) */
+        /* или display: block; или flex; в зависимости от вашего исходного стиля */
+    }
+    .nav-links {
+        display: flex; /* Показываем десктопное меню */
+    }
+    .nav-links .mobile-menu {
         display: none !important;
     }
 }
-
 /* Button Styles */
 .btn {
     padding: 0.5rem 1rem;
@@ -681,4 +718,5 @@ nav.nav > button.mobile-menu-toggle {
         margin-top: 2rem;
     }
 } 
+
 
