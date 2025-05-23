@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+<?php session_start(); ?>
 <header class="header">
     <nav class="nav">
         <div class="mobile-controls">
@@ -28,8 +29,16 @@
         </ul>
 
         <div class="auth-buttons">
-            <button class="btn btn-login">Войти</button>
-            <button class="btn btn-primary">Начать бесплатно</button>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <div class="user-profile-btn" id="userProfileBtn">
+                    <i class="fas fa-user-circle"></i>
+                    <span><?php echo htmlspecialchars($_SESSION['user_name']); ?></span>
+                </div>
+                <button class="btn btn-logout" id="logoutBtn">Выйти</button>
+            <?php else: ?>
+                <button class="btn btn-login">Войти</button>
+                <button class="btn btn-primary">Начать бесплатно</button>
+            <?php endif; ?>
         </div>
     </nav>
 </header>
