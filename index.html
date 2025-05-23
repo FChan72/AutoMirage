@@ -221,6 +221,75 @@
         </section>
     </footer>
 
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Вход</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Пароль:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+            <p class="form-switch">Нет аккаунта? <a href="#" id="showRegister">Зарегистрироваться</a></p>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Регистрация</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Имя:</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Пароль:</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            </form>
+            <p class="form-switch">Уже есть аккаунт? <a href="#" id="showLogin">Войти</a></p>
+        </div>
+    </div>
+
+    <!-- Модальное окно личного кабинета -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Личный кабинет</h2>
+            <div class="profile-info">
+                <p><strong>ID:</strong> <span id="profileId"><?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : ''; ?></span></p>
+                <p><strong>Имя:</strong> <span id="profileName"><?php echo isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_name']) : ''; ?></span></p>
+                <p><strong>Email:</strong> <span id="profileEmail"><?php echo isset($_SESSION['user_email']) ? htmlspecialchars($_SESSION['user_email']) : ''; ?></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Подтверждение email</h2>
+            <form id="codeForm">
+                <div class="form-group">
+                    <label for="registerCode">Введите 8-значный код, отправленный на вашу почту:</label>
+                    <input type="text" id="registerCode" maxlength="8" required pattern="\\d{8}">
+                </div>
+                <button type="submit" class="btn btn-primary">Подтвердить</button>
+            </form>
+        </div>
+    </div>
+
     <script src="static/js/main.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://vk.com/js/api/openapi.js?169"></script>
