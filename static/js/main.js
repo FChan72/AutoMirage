@@ -28,50 +28,43 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Анимация кнопок
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('mouseover', function() {
-        this.style.transform = 'scale(1.05)';
-    });
-    
-    button.addEventListener('mouseout', function() {
-        this.style.transform = 'scale(1)';
-    });
-});
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.querySelector('.nav-links'); // Используем .nav-links как мобильное меню
+    const mobileControls = document.querySelector('.mobile-controls');
+    const mobileLoginBtn = document.querySelector('.mobile-login');
+    const desktopLoginBtn = document.querySelector('.auth-buttons .btn-login');
 
-// Инициализация мобильного меню
-const menuToggle = document.querySelector('.mobile-menu-toggle');
-const mobileMenu = document.querySelector('.mobile-menu');
-const desktopLoginBtn = document.querySelector('.auth-buttons .btn-login');
-const mobileLoginBtn = document.querySelector('.mobile-login');
-
-// Переключение меню
-menuToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    mobileMenu.classList.toggle('active');
-});
-
-// Закрытие меню при клике вне области
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.mobile-menu') && !e.target.closest('.mobile-controls')) {
-        mobileMenu.classList.remove('active');
+    if (menuToggle && mobileMenu) { // Проверяем, что оба элемента найдены
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenu.classList.toggle('active'); // Добавляем/удаляем класс 'active' для показа/скрытия
+        });
     }
-});
 
-// Синхронизация кнопки "Войти"
-function handleLogin() {
-    // Ваша логика авторизации
-    console.log('Login button clicked');
-}
+    document.addEventListener('click', (e) => {
+        if (mobileMenu && !e.target.closest('.nav-links') && !e.target.closest('.mobile-controls') && menuToggle && !e.target.closest('.mobile-menu-toggle')) {
+            mobileMenu.classList.remove('active');
+        }
+    });
 
-desktopLoginBtn.addEventListener('click', handleLogin);
-mobileLoginBtn.addEventListener('click', handleLogin);
-
-// Ресайз окна
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        mobileMenu.classList.remove('active');
+    function handleLogin() {
+        console.log('Login button clicked');
     }
+
+    if (desktopLoginBtn) {
+        desktopLoginBtn.addEventListener('click', handleLogin);
+    }
+
+    if (mobileLoginBtn) {
+        mobileLoginBtn.addEventListener('click', handleLogin);
+    }
+
+    window.addEventListener('resize', () => {
+        if (mobileMenu && window.innerWidth > 768) {
+            mobileMenu.classList.remove('active');
+        }
+    });
 });
 
 // Таймер экономии времени
