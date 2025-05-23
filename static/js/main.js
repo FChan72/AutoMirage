@@ -65,6 +65,205 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileMenu.classList.remove('active');
         }
     });
+
+    // Модальные окна
+    const loginModal = document.getElementById('loginModal');
+    const registerModal = document.getElementById('registerModal');
+    const loginBtn = document.querySelector('.btn-login');
+    const registerBtn = document.querySelector('.btn-primary');
+    const closeBtns = document.querySelectorAll('.close');
+    const showRegisterLink = document.getElementById('showRegister');
+    const showLoginLink = document.getElementById('showLogin');
+
+    // Открытие модальных окон
+    loginBtn.addEventListener('click', () => {
+        loginModal.style.display = 'block';
+    });
+
+    registerBtn.addEventListener('click', () => {
+        registerModal.style.display = 'block';
+    });
+
+    // Закрытие модальных окон
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+            registerModal.style.display = 'none';
+        });
+    });
+
+    // Переключение между формами
+    showRegisterLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'none';
+        registerModal.style.display = 'block';
+    });
+
+    showLoginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.style.display = 'none';
+        loginModal.style.display = 'block';
+    });
+
+    // Закрытие по клику вне модального окна
+    window.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+            loginModal.style.display = 'none';
+        }
+        if (e.target === registerModal) {
+            registerModal.style.display = 'none';
+        }
+    });
+
+    // Обработка формы входа
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        try {
+            const response = await fetch('auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                loginModal.style.display = 'none';
+                location.reload();
+            } else {
+                alert(data.error || 'Ошибка при входе');
+            }
+        } catch (error) {
+            alert('Ошибка при отправке запроса');
+        }
+    });
+
+    // --- Модальное окно подтверждения кода ---
+    const codeModal = document.getElementById('codeModal');
+    const codeForm = document.getElementById('codeForm');
+    const codeCloseBtn = codeModal ? codeModal.querySelector('.close') : null;
+    let lastRegisterData = {};
+
+    // Открытие/закрытие окна кода
+    if (codeCloseBtn && codeModal) {
+        codeCloseBtn.addEventListener('click', () => {
+            codeModal.style.display = 'none';
+        });
+    }
+    window.addEventListener('click', (e) => {
+        if (codeModal && e.target === codeModal) {
+            codeModal.style.display = 'none';
+        }
+    });
+
+    // Обработка формы регистрации
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        lastRegisterData = { name, email, password };
+
+        try {
+            const response = await fetch('auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=register&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                registerModal.style.display = 'none';
+                location.reload();
+            } else if (data.need_code) {
+                registerModal.style.display = 'none';
+                codeModal.style.display = 'block';
+            } else {
+                alert(data.error || 'Ошибка при регистрации');
+            }
+        } catch (error) {
+            alert('Ошибка при отправке запроса');
+        }
+    });
+
+    // Обработка формы кода
+    if (codeForm) {
+        codeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const code = document.getElementById('registerCode').value;
+            if (!lastRegisterData.email || !lastRegisterData.password || !lastRegisterData.name) {
+                alert('Данные регистрации не найдены. Попробуйте снова.');
+                codeModal.style.display = 'none';
+                return;
+            }
+            try {
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `action=register&name=${encodeURIComponent(lastRegisterData.name)}&email=${encodeURIComponent(lastRegisterData.email)}&password=${encodeURIComponent(lastRegisterData.password)}&code=${encodeURIComponent(code)}`
+                });
+                const data = await response.json();
+                if (data.success) {
+                    codeModal.style.display = 'none';
+                    location.reload();
+                } else {
+                    alert(data.error || 'Ошибка подтверждения');
+                }
+            } catch (error) {
+                alert('Ошибка при отправке запроса');
+            }
+        });
+    }
+
+    // --- Личный кабинет ---
+    const userProfileBtn = document.getElementById('userProfileBtn');
+    const profileModal = document.getElementById('profileModal');
+    const logoutBtn = document.getElementById('logoutBtn');
+    // Крестик в модалке профиля
+    const profileCloseBtn = profileModal ? profileModal.querySelector('.close') : null;
+
+    if (userProfileBtn && profileModal) {
+        userProfileBtn.addEventListener('click', () => {
+            profileModal.style.display = 'block';
+        });
+    }
+    if (profileCloseBtn && profileModal) {
+        profileCloseBtn.addEventListener('click', () => {
+            profileModal.style.display = 'none';
+        });
+    }
+    window.addEventListener('click', (e) => {
+        if (profileModal && e.target === profileModal) {
+            profileModal.style.display = 'none';
+        }
+    });
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'action=logout'
+                });
+                const data = await response.json();
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert(data.error || 'Ошибка выхода');
+                }
+            } catch (error) {
+                alert('Ошибка при отправке запроса');
+            }
+        });
+    }
 });
 
 // Таймер экономии времени
@@ -80,277 +279,6 @@ function updateTime(saved) {
             </div>
         `;
     }
-}
-
-// Модальное окно для входа
-const loginButton = document.querySelector('.btn-login');
-const modal = document.createElement('div');
-modal.className = 'modal';
-modal.innerHTML = `
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Вход в систему</h2>
-        <form id="login-form">
-            <input type="email" name="email-login" placeholder="Email" required>
-            <input type="password" name="password-login" placeholder="Пароль" required>
-            <button type="submit" class="btn btn-primary">Войти</button>
-        </form>
-        <div class="social-login">
-            <p>Войти через:</p>
-            <div class="social-buttons">
-                <button class="btn btn-social google" onclick="loginWithGoogle()">
-                    <i class="fab fa-google"></i> Google
-                </button>
-                <button class="btn btn-social vk" onclick="loginWithVK()">
-                    <i class="fab fa-vk"></i> VK
-                </button>
-            </div>
-        </div>
-        <div class="register-link">
-            <p>У вас нет аккаунта? <a href="#" id="show-register">Зарегистрироваться</a></p>
-        </div>
-    </div>
-`;
-
-// Модальное окно для регистрации
-const registerModal = document.createElement('div');
-registerModal.className = 'modal';
-registerModal.innerHTML = `
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Регистрация</h2>
-        <form id="register-form">
-            <input type="email" name="email-reg" placeholder="Email" required>
-            <input type="password" name="password-reg" placeholder="Пароль" required>
-            <input type="password" name="password2-reg" placeholder="Подтвердите пароль" required>
-            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-        </form>
-        <div class="social-login">
-            <p>Зарегистрироваться через:</p>
-            <div class="social-buttons">
-                <button class="btn btn-social google" onclick="registerWithGoogle()">
-                    <i class="fab fa-google"></i> Google
-                </button>
-                <button class="btn btn-social vk" onclick="registerWithVK()">
-                    <i class="fab fa-vk"></i> VK
-                </button>
-            </div>
-        </div>
-        <div class="login-link">
-            <p>Уже есть аккаунт? <a href="#" id="show-login">Войти</a></p>
-        </div>
-    </div>
-`;
-
-// Функции для входа через социальные сети
-function loginWithGoogle() {
-    // Инициализация Google Sign-In
-    gapi.load('auth2', function() {
-        gapi.auth2.init({
-            client_id: 'YOUR_GOOGLE_CLIENT_ID'
-        }).then(function(auth2) {
-            auth2.signIn().then(function(googleUser) {
-                const profile = googleUser.getBasicProfile();
-                // Отправка данных на сервер
-                fetch('/api/auth/google', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: profile.getEmail(),
-                        name: profile.getName(),
-                        google_id: profile.getId()
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        updateUIAfterLogin(data.user);
-                        modal.style.display = 'none';
-                    }
-                });
-            });
-        });
-    });
-}
-
-function loginWithVK() {
-    VK.Auth.login(function(response) {
-        if (response.session) {
-            VK.Api.call('users.get', {fields: 'email'}, function(data) {
-                if (data.response) {
-                    const user = data.response[0];
-                    // Отправка данных на сервер
-                    fetch('/api/auth/vk', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            vk_id: user.id,
-                            name: `${user.first_name} ${user.last_name}`,
-                            email: user.email
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            updateUIAfterLogin(data.user);
-                            modal.style.display = 'none';
-                        }
-                    });
-                }
-            });
-        }
-    });
-}
-
-// Обработка закрытия модальных окон
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('close')) {
-        const modal = e.target.closest('.modal');
-        if (modal) {
-            modal.style.display = 'none';
-            modal.remove();
-        }
-    }
-});
-
-// Обработка форм
-if (loginButton) {
-    loginButton.addEventListener('click', () => {
-        document.body.appendChild(modal);
-        modal.style.display = 'flex';
-    });
-}
-
-// Показать форму регистрации
-document.addEventListener('click', (e) => {
-    if (e.target.id === 'show-register') {
-        e.preventDefault();
-        modal.style.display = 'none';
-        document.body.appendChild(registerModal);
-        registerModal.style.display = 'flex';
-    }
-});
-
-// Показать форму входа
-document.addEventListener('click', (e) => {
-    if (e.target.id === 'show-login') {
-        e.preventDefault();
-        registerModal.style.display = 'none';
-        modal.style.display = 'flex';
-    }
-});
-
-// Обработка формы входа
-document.addEventListener('submit', (e) => {
-    if (e.target.id === 'login-form') {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        
-        fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: formData.get('email'),
-                password: formData.get('password')
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                showError(data.error);
-            } else {
-                updateUIAfterLogin(data);
-                modal.style.display = 'none';
-            }
-        });
-    }
-});
-
-// Обработка формы регистрации
-document.addEventListener('submit', (e) => {
-    if (e.target.id === 'register-form') {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        
-        const password = formData.get('password');
-        const passwordConfirm = formData.get('password_confirm');
-        
-        if (password !== passwordConfirm) {
-            showError('Пароли не совпадают');
-            return;
-        }
-        
-        fetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: formData.get('email'),
-                password: password
-            })
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => Promise.reject(err));
-            }
-            return response.json();
-        })
-        .then(data => {
-            showSuccess('Регистрация успешна! Теперь вы можете войти.');
-            registerModal.style.display = 'none';
-            modal.style.display = 'flex';
-        })
-        .catch(error => {
-            showError(error.error || 'Ошибка регистрации');
-        });
-    }
-});
-
-// Обновление UI после входа
-function updateUIAfterLogin(user) {
-    const authButtons = document.querySelector('.auth-buttons');
-    authButtons.innerHTML = `
-        <div class="user-profile">
-            <img src="${user.avatar || 'static/images/default-avatar.png'}" alt="Avatar" class="avatar">
-            <span>${user.name || user.email}</span>
-            <button class="btn btn-logout" onclick="logout()">Выйти</button>
-        </div>
-    `;
-}
-
-// Выход из системы
-function logout() {
-    fetch('/api/logout', {
-        method: 'POST'
-    })
-    .then(() => {
-        location.reload();
-    });
-}
-
-// Показать ошибку
-function showError(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    document.querySelector('.modal-content').prepend(errorDiv);
-    setTimeout(() => errorDiv.remove(), 3000);
-}
-
-// Показать успешное сообщение
-function showSuccess(message) {
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message';
-    successDiv.textContent = message;
-    document.querySelector('.modal-content').prepend(successDiv);
-    setTimeout(() => successDiv.remove(), 3000);
 }
 
 // Добавление стилей для модального окна
@@ -493,3 +421,4 @@ document.querySelectorAll('.feature-card, .template-card, .pricing-card').forEac
     card.style.opacity = '1';
     card.style.transform = 'translateY(0)';
 }); 
+
