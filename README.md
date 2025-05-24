@@ -41,17 +41,7 @@ flask db upgrade
 
 flask run
 2. Open http://localhost:5000 in your browser
-```
-## Project Structure
-automirage/
-├── app.py          # Main application file                                              
-├── requirements.txt  # Project dependencies                                                        
-├── static/         # Static files                                                                 
-│   ├── css/        # Styles                                                              
-│   ├── js/         # JavaScript files                                                 
-│   └── images/     # Images                                                          
-└── templates/      # HTML templates                                                                             
-
+```                                                                         
 ## Technologies
 Frontend: HTML5, CSS3, JavaScript
 Backend: Python, Flask
